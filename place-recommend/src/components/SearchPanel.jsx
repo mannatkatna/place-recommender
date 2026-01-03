@@ -4,7 +4,6 @@ export default function SearchPanel({
   filters,
   setFilters
 }) {
-
   function handleFilterChange(e) {
     setFilters({
       ...filters,
@@ -18,6 +17,7 @@ export default function SearchPanel({
         lat: pos.coords.latitude,
         lng: pos.coords.longitude
       };
+      console.log("Using my location:", userLoc);
       setLocation(userLoc);
       loadPlaces(userLoc);
     });
@@ -25,8 +25,15 @@ export default function SearchPanel({
 
   function searchByCity(e) {
     e.preventDefault();
-    const city = e.target.city.value;
-    if (!city) return;
+
+    const city = e.currentTarget.city.value;
+    console.log("Manual search city:", city);
+
+    if (!city) {
+      alert("Please enter a city");
+      return;
+    }
+
 
     const fakeLoc = { lat: 28.6139, lng: 77.2090 };
     setLocation(fakeLoc);
@@ -34,7 +41,8 @@ export default function SearchPanel({
   }
 
   function loadPlaces(loc) {
-    // Demo places WITH EXTRA DATA
+    console.log("Loading places for:", loc);
+
     const demoPlaces = [
       {
         id: "1",
@@ -72,66 +80,62 @@ export default function SearchPanel({
   }
 
   return (
-  <div className="stay-card">
-    <div className="stay-left">
-      <h4 className="stay-title">FIND PLACES</h4>
+    <div className="stay-card">
+      <div className="stay-left">
+        <h4 className="stay-title">FIND PLACES</h4>
 
-    
-      <div className="stay-row">
-       
-        <input
-          name="city"
-          placeholder="Enter city or area"
-          className="stay-input"
-        />
+
+        <form onSubmit={searchByCity}>
+          <div className="stay-row">
+            <input
+              name="city"
+              placeholder="Enter city or area"
+              className="stay-input"
+            />
+            <button
+  type="submit"
+  className="primary-btn"
+  style={{ marginTop: 8 }}
+>
+  Search Location
+</button>
+          </div>
+        </form>
+
+        <div className="stay-row split">
+          <select name="mood" onChange={handleFilterChange}>
+            <option value="">Mood</option>
+            <option value="chill">Chill</option>
+            <option value="party">Party</option>
+            <option value="work">Work</option>
+          </select>
+
+          <select name="budget" onChange={handleFilterChange}>
+            <option value="">Budget</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div className="stay-row split">
+          <select name="minRating" onChange={handleFilterChange}>
+            <option value="0">Any Rating</option>
+            <option value="4">4 & above</option>
+            <option value="4.5">4.5 & above</option>
+          </select>
+
+          <select name="distance" onChange={handleFilterChange}>
+            <option value="10">Any Distance</option>
+            <option value="3">Within 3 km</option>
+            <option value="5">Within 5 km</option>
+          </select>
+        </div>
       </div>
 
-      <form onSubmit={searchByCity}>
-  <input
-    name="city"
-    placeholder="Enter city or area"
-    className="stay-input"
-  />
-</form>
-
-
-      <div className="stay-row split">
-        <select name="mood" onChange={handleFilterChange}>
-          <option value="">Mood</option>
-          <option value="chill">Chill</option>
-          <option value="party">Party</option>
-          <option value="work">Work</option>
-        </select>
-
-        <select name="budget" onChange={handleFilterChange}>
-          <option value="">Budget</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-        </select>
-      </div>
-
-   
-      <div className="stay-row split">
-        <select name="minRating" onChange={handleFilterChange}>
-          <option value="0">Any Rating</option>
-          <option value="4">3 & above</option>
-          <option value="4.5">4.5 & above</option>
-        </select>
-
-        <select name="distance" onChange={handleFilterChange}>
-          <option value="10">Any Distance</option>
-          <option value="3">Within 3 km</option>
-          <option value="5">Within 5 km</option>
-        </select>
-      </div>
+      <button className="stay-search-btn" onClick={useMyLocation}>
+        ⌕
+      </button>
     </div>
-
-
-    <button className="stay-search-btn" onClick={useMyLocation}>
-      ⌕
-    </button>
-  </div>
-);
-
+  );
 }
