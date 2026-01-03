@@ -1,16 +1,57 @@
-# React + Vite
+#  Smarty (Resturant Recommender)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A location-based web application that helps users discover nearby resturant based on preferences such as **mood, budget, rating, and distance**, with an interactive map and real-time filtering.
 
-Currently, two official plugins are available:
+##  Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-  **Use My Location**
+  - Automatically detects user location using browser Geolocation API
+  - Displays nearby recommended places on map and list
 
-## React Compiler
+- **Manual Location Search**
+  - Users can search places by entering a city or area
+  - Designed to be extendable with real geocoding APIs
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-  **Smart Filters**
+  - Mood (chill, party, work)
+  - Budget (low / medium / high)
+  - Minimum rating
+  - Distance range (km)
 
-## Expanding the ESLint configuration
+-  **Live Search**
+  - Header search filters places instantly as user types
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-  **Interactive Map**
+  - Google Maps integration
+  - Muted, modern map style
+  - Dynamic markers for recommended places
+  - Hover on place card highlights corresponding marker
+
+-  **Recently Visited**
+  - Clicking a place adds it to visit history
+  - Prevents duplicates
+
+- **Smooth Animations**
+  - Subtle UI animations using Framer Motion
+  - Improves user experience and feedback
+
+-  **Graceful Fallback Handling**
+  - Uses demo data when external APIs are unavailable
+  - Prevents app crashes and blank screens
+
+## Tech Stack
+
+- **React.js** (Hooks, state lifting, derived state)
+- **Vite** (Fast development setup)
+- **Google Maps JavaScript API**
+- **Framer Motion** (Animations)
+- **CSS Grid & Flexbox**
+
+## Project Architecture
+
+- Centralized state management in `App.jsx`
+- Derived data (`filteredPlaces`) instead of mutating original state
+- Map ↔ list synchronization via shared state
+- Defensive programming for external APIs (`window.google` guards)
+- Component-based scalable structure
+
